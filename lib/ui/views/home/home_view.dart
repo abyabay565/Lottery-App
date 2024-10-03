@@ -14,6 +14,7 @@ class HomeView extends StackedView<HomeViewModel> {
     HomeViewModel viewModel,
     Widget? child,
   ) {
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
