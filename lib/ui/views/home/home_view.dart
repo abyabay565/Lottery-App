@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottery_winner/theme/app_color.dart';
+import 'package:lottery_winner/tools/screen_size.dart';
 import 'package:stacked/stacked.dart';
-import 'package:lottery_winner/ui/common/app_colors.dart';
-import 'package:lottery_winner/ui/common/ui_helpers.dart';
 
+import 'components/custom_drawer_view.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
@@ -16,62 +18,51 @@ class HomeView extends StackedView<HomeViewModel> {
   ) {
 
     return Scaffold(
+      endDrawer:  const CustomDrawerView(),
+     // endDrawerEnableOpenDragGesture: true,
+      key: viewModel.scaffoldKey,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                verticalSpaceLarge,
-                Column(
+         top: false,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: double.infinity,
+                height: ScreenSize.height/4.1,
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Palette.black.withOpacity(.40),
+                        blurRadius: 15.r,
+                        offset: const Offset(0, 4),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  color: Palette.primary,
+                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(45.r),bottomLeft: Radius.circular(45.r))
+                ),
+                child: Column(
                   children: [
-                    const Text(
-                      'Hello, STACKED!',
-                      style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.w900,
+                    Container(
+                      height: 50,
+                      padding:  EdgeInsets.only(right: 15.h,),
+                      margin:  EdgeInsets.only(top: 40.h),
+                      decoration: const BoxDecoration(
+                          color: Palette.primary
                       ),
-                    ),
-                    verticalSpaceMedium,
-                    MaterialButton(
-                      color: Colors.black,
-                      onPressed: viewModel.incrementCounter,
-                      child: Text(
-                        viewModel.counterLabel,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
+                      alignment: Alignment.topRight,
+                      child: IconButton(onPressed: (){
+                        viewModel.scaffoldKey.currentState?.openEndDrawer();
+                      }, icon: const Icon(Icons.menu,color: Palette.white
+                        ,)),
+                    )
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    MaterialButton(
-                      color: kcDarkGreyColor,
-                      onPressed: viewModel.showDialog,
-                      child: const Text(
-                        'Show Dialog',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    MaterialButton(
-                      color: kcDarkGreyColor,
-                      onPressed: viewModel.showBottomSheet,
-                      child: const Text(
-                        'Show Bottom Sheet',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
+              ),
+
+            ],
           ),
         ),
       ),
